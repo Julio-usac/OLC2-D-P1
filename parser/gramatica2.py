@@ -1,3 +1,8 @@
+from parser.nodos import *
+
+global noNode
+noNode = 0
+
 
 reservadas = {
     'pub' : 'PUB',
@@ -37,7 +42,7 @@ reservadas = {
     'len' : 'LEN',
     'break'  : 'BREAK',
     'to_owned' : 'TOOWNED',
-    'as'  : 'AS',
+    'as'  : 'AS'
 
 }
 
@@ -128,8 +133,39 @@ def t_ID(t):
      
 
 def t_FORM(t):
-     r'\"([^\"]|{}|{:\?})*\"'
-     return t
+    r'\".*?\"'
+    t.value = t.value[1:-1]  # Quitamos las comillas
+    nodoCadena = TerminalCadena(t, getNoNodo())
+    estado = "S2"
+    texto = ""
+    for x in t.value:
+        if x == "{":
+            if estado == "S2":
+                estado = "S3"
+                continue
+            elif estado == "S3":
+                estado = "S2"
+        elif x == "}":
+            if estado == "S3":
+                estado = "S2"
+                nodoCadena.agregarTexto(texto, getNoNodo())
+                nodoCadena.agregarFormato(getNoNodo())
+                texto = ""
+                continue
+            else:
+                estado = "ERROR"
+        else:
+            texto += x
+    if texto != "":
+        nodoCadena.agregarTexto(texto, getNoNodo())
+    if estado == "S3":
+        estado = "ERROR"
+    if estado != "S2":
+        print("Error con el formato de cadena", t.value)
+        t.value = ""
+        return t
+    t.value = nodoCadena
+    return t
 
 
 
@@ -149,7 +185,7 @@ def t_error(t):
     
 # Construyendo el analizador léxico
 
-import Analyzer.ply.lex as lex
+import ply.lex as lex
 lexer = lex.lex()
 
 # Asociación de operadores y precedencia
@@ -162,9 +198,15 @@ precedence = (
 # Definición de la gramática
 
 def p_funciones_lista(t):
-    '''funciones    : funciones funcion 
+    '''funciones    : funcion  funciones 
                     | funcion '''
-
+    t[0] = InstruccionGenerico(t.slice[0], getNoNodo())
+    if (len(t) == 3):
+        t[0].hojas = t[2].hojas
+        t[0].hojas.insert(0, t[1])
+    else:
+        t[0].hojas.append(t[1])
+        
 def p_funciones_evaluar(t):
     '''funcion  : PUB FN ID PARIZQ parametros PARDER tipofun LLAVEIZQ instrucciones LLAVEDER
                 | FN ID PARIZQ parametros PARDER tipofun LLAVEIZQ instrucciones LLAVEDER
@@ -172,6 +214,11 @@ def p_funciones_evaluar(t):
                 | MODF ID LLAVEIZQ funciones LLAVEDER
                 | FN MAIN PARIZQ PARDER LLAVEIZQ instrucciones LLAVEDER
                 | STRUCT ID LLAVEIZQ liststruct LLAVEDER'''
+    if t[2] == "main":
+        t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
+        t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
+        t[0].hojas.append(t[6])
 
 def p_parametros(t):
     '''parametros   : parametros2  
@@ -192,8 +239,14 @@ def p_tipofun(t):
 
 
 def p_instrucciones_lista(t):
-    '''instrucciones    : instrucciones instruccion 
+    '''instrucciones    : instruccion instrucciones  
                         | instruccion '''
+    t[0] = InstruccionGenerico(t.slice[0], getNoNodo())
+    if (len(t) == 3):
+        t[0].hojas = t[2].hojas
+        t[0].hojas.insert(0, t[1])
+    else:
+        t[0].hojas.append(t[1])
 
 def p_instruccion(t):
     '''instruccion  : LET mutable ID pyc arrtipos IGUAL logica PTCOMA
@@ -208,6 +261,12 @@ def p_instruccion(t):
                     | CONTINUE PTCOMA
                     | WHILE logica LLAVEIZQ instrucciones LLAVEDER
                     | FOR ID IN opcionfor LLAVEIZQ instrucciones LLAVEDER'''
+    if t[1] == "let":
+        t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
+        t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
+        t[0].hojas.append(t[7])
+
 
 def p_opcionfor(t):
     '''opcionfor    : logica
@@ -224,7 +283,8 @@ def p_logica(t):
                 | logica OR logica
                 | NOT logica
                 | rel'''
-
+    if len(t)== 2:
+        t[0]=t[1]
 
 def p_rel(t):
     '''rel  : rel IGUAL IGUAL rel
@@ -234,7 +294,8 @@ def p_rel(t):
             | rel MAIGUAL rel
             | rel DIS rel
             | expresion'''
-
+    if len(t)== 2:
+        t[0]=t[1]
             
 def p_mutable(t):
     '''mutable  : MUT  
@@ -274,14 +335,35 @@ def p_expresion_binaria(t):
                   | expresion MOD expresion
                   | expresion AS tipos'''
 
+    if t[2] == '+'  : 
+        t[0] = NodoSuma(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+
+    elif t[2] == '-': 
+        t[0] = NodoResta(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '*': 
+        t[0] = NodoMultiplicacion(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '/': 
+        t[0] = NodoDivision(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
 
 def p_expresion_unaria(t):
     'expresion : MENOS expresion %prec UMENOS'
-    t[0] = -t[2]
+    #[0] = -t[2]
 
 def p_expresion_agrupacion(t):
     'expresion : PARIZQ logica PARDER'
-    t[0] = t[2]
+    #t[0] = t[2]
 
 def p_expresion_number(t):
     '''expresion    : ENTERO
@@ -293,7 +375,22 @@ def p_expresion_number(t):
                     | ID listarreglo
                     | ID PARIZQ listexpr PARDER
                     | listarreglo'''
-    t[0] = t[1]
+
+    if type(t[1]) is float:
+        print("es un decimal")
+        t[0] = TerminalDecimal(t.slice[1], getNoNodo())
+        
+    elif type(t[1]) is int:
+        print("es un int")
+        t[0] = TerminalEntero(t.slice[1], getNoNodo())
+        
+    elif type(t[1]) is TerminalCadena:
+        print("es un string")
+        t[0] =t.slice[1].value 
+    
+    else:
+        print(type(t[1]))
+    
 
 
 def p_expresion_mod(t):
@@ -338,5 +435,10 @@ def p_empty(t):
 def p_error(t):
     print("Error sintáctico en '%s'"  % t.lexer.lineno)
 
-import Analyzer.ply.yacc as yacc
+import ply.yacc as yacc
 parser = yacc.yacc()
+
+def getNoNodo():
+    global noNode
+    noNode = noNode + 1
+    return noNode

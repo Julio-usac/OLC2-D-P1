@@ -1,0 +1,2 @@
+from .InstruccionGenerico import InstruccionGenerico
+from .InstruccionAsignacion import InstruccionAsignacion
