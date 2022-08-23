@@ -7,4 +7,7 @@ print(input)
 raiz = parser.parse(input)
 
 print(raiz.obtener_dot())
-raiz.ejecutar(Entorno("Global"))
+entorno = Entorno("Cualquier cosa")
+raiz.ejecutar(entorno)
+print("Entorno Global", entorno.tabla_simbolos)
+

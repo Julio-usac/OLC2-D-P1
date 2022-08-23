@@ -1,5 +1,6 @@
 from parser.nodos import *
 
+
 global noNode
 noNode = 0
 
@@ -214,11 +215,13 @@ def p_funciones_evaluar(t):
                 | MODF ID LLAVEIZQ funciones LLAVEDER
                 | FN MAIN PARIZQ PARDER LLAVEIZQ instrucciones LLAVEDER
                 | STRUCT ID LLAVEIZQ liststruct LLAVEDER'''
+    
     if t[2] == "main":
-        t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
+        t[0]=t[6]
+        '''t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
         t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
-        t[0].hojas.append(t[6])
+        t[0].hojas.append(t[6])'''
 
 def p_parametros(t):
     '''parametros   : parametros2  
@@ -261,11 +264,21 @@ def p_instruccion(t):
                     | CONTINUE PTCOMA
                     | WHILE logica LLAVEIZQ instrucciones LLAVEDER
                     | FOR ID IN opcionfor LLAVEIZQ instrucciones LLAVEDER'''
+    
     if t[1] == "let":
+        t.slice[0].type="Asignacion";
         t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
         t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
         t[0].hojas.append(t[7])
+
+    elif t[1] == "if":
+        t.slice[0].type="IF";
+        t[0] = InstruccionIf(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[2])
+        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+        t[0].hojas.append(t[4])
+        t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
 
 
 def p_opcionfor(t):
@@ -296,6 +309,14 @@ def p_rel(t):
             | expresion'''
     if len(t)== 2:
         t[0]=t[1]
+
+    elif t[2] == '>': 
+        t.slice[0].type="relacional";
+        t[0] = NodoMayor(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    
             
 def p_mutable(t):
     '''mutable  : MUT  
@@ -308,6 +329,11 @@ def p_pyc(t):
 
 def p_arrtipos(t):
     '''arrtipos : tipos
+                | arreglos
+                | empty '''
+
+def p_vectores(t):
+    '''vectores : tipos
                 | arreglos
                 | empty '''
 
@@ -333,7 +359,7 @@ def p_expresion_binaria(t):
                   | expresion POR expresion
                   | expresion DIVIDIDO expresion
                   | expresion MOD expresion
-                  | expresion AS tipos'''
+                  | expresion AS  tipos'''
 
     if t[2] == '+'  : 
         t[0] = NodoSuma(t.slice[0], getNoNodo())
@@ -363,7 +389,7 @@ def p_expresion_unaria(t):
 
 def p_expresion_agrupacion(t):
     'expresion : PARIZQ logica PARDER'
-    #t[0] = t[2]
+    t[0] = t[2]
 
 def p_expresion_number(t):
     '''expresion    : ENTERO
@@ -386,10 +412,8 @@ def p_expresion_number(t):
         
     elif type(t[1]) is TerminalCadena:
         print("es un string")
-        t[0] =t.slice[1].value 
+        t[0] =t.slice[1].value
     
-    else:
-        print(type(t[1]))
     
 
 

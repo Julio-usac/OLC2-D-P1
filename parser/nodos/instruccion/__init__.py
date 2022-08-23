@@ -1,2 +1,3 @@
 from .InstruccionGenerico import InstruccionGenerico
 from .InstruccionAsignacion import InstruccionAsignacion
+from .InstruccionIf import InstruccionIf
