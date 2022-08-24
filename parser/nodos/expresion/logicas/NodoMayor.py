@@ -8,7 +8,5 @@ class NodoMayor(Nodo):
         # exp > exp
         self.hojas[0].ejecutar(entorno)
         self.hojas[2].ejecutar(entorno)
-        print(self.hojas[0].tipo)
         self.validar_tipo('>', self.hojas[0].tipo, self.hojas[2].tipo)
-       
         self.valor = self.hojas[0].valor > self.hojas[2].valor

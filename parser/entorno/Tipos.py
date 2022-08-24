@@ -49,6 +49,27 @@ validador = {
         DataType.f64: {
             DataType.f64: DataType.boolean
         },
+    },'<=': {
+        DataType.int64: {
+            DataType.int64: DataType.boolean,
+        },
+        DataType.f64: {
+            DataType.f64: DataType.boolean
+        },
+    },'>=': {
+        DataType.int64: {
+            DataType.int64: DataType.boolean,
+        },
+        DataType.f64: {
+            DataType.f64: DataType.boolean
+        },
+    },'!=': {
+        DataType.int64: {
+            DataType.int64: DataType.boolean,
+        },
+        DataType.f64: {
+            DataType.f64: DataType.boolean
+        },
     },
     '==': {
         DataType.int64: {

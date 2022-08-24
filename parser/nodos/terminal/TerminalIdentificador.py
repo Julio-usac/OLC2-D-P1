@@ -6,4 +6,7 @@ class TerminalIdentificador(Nodo):
         self.nombre = self.valor
 
     def ejecutar(self, entorno):
-        pass
+        valvar = entorno.obtenerValor(self.nombre)
+        if valvar != None:
+            self.valor = valvar['valor']
+            self.tipo = valvar['tipo']

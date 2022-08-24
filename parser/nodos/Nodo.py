@@ -36,6 +36,11 @@ class Nodo(ABC):
             return
         self.tipo = result2.get(tipo2, DataType.error)
 
+    def copiar_valorhoja(self, nohoja):
+        if nohoja < len(self.hojas):
+            self.valor = self.hojas[nohoja].valor
+            self.tipo = self.hojas[nohoja].tipo
+            
     @abstractmethod
     def ejecutar(self, entorno):
         pass

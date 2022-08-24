@@ -1,13 +1,12 @@
 fn main () {
 
-   let mut a : i64 = 20+2*25;
-   let mut x : String = 21+25;
-
-   if 5 > 6 {
-    let mut c : String = 22+25;
-   }
-
    
+   let mut a : i64 = 20+2*25;
 
+   if 1 > 4 {
+      let mut c : String = a;
+   }else{
+      let mut b : String = 123;
+   }
 
 }

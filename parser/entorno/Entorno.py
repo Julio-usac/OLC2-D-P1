@@ -7,6 +7,15 @@ class Entorno():
     def agregarVariable(self, nombre_variable, valor, tipo):
         # Validaciones
         simbolo = {'valor': valor, 'tipo': tipo}
+        if self.tabla_simbolos.get(nombre_variable, None) != None:
+            self.tabla_simbolos[nombre_variable] = simbolo
+            return
+        tmp_anterior = self.entorno_anterior
+        while tmp_anterior is not None:
+            if tmp_anterior.tabla_simbolos.get(nombre_variable, None) is not None:
+                tmp_anterior.tabla_simbolos[nombre_variable] = simbolo
+                return
+            tmp_anterior = tmp_anterior.entorno_anterior
         self.tabla_simbolos[nombre_variable] = simbolo
 
     def asignarAnterior(self, anterior):
@@ -21,4 +30,5 @@ class Entorno():
             simbolo = tmp_anterior.tabla_simbolos.get(nombre, None)
             if simbolo != None:
                 return simbolo
+            tmp_anterior = tmp_anterior.entorno_anterior
         return None

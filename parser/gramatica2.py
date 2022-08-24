@@ -271,7 +271,11 @@ def p_instruccion(t):
         t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
         t[0].hojas.append(t[7])
-
+    elif t[3] == "=":
+        t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
+        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+        t[0].hojas.append(t[4])
     elif t[1] == "if":
         t.slice[0].type="IF";
         t[0] = InstruccionIf(t.slice[0], getNoNodo())
@@ -279,6 +283,8 @@ def p_instruccion(t):
         t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
         t[0].hojas.append(t[4])
         t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
+        if t[6] is not None:
+            t[0].hojas.append(t[6])
 
 
 def p_opcionfor(t):
@@ -290,6 +296,17 @@ def p_unelse(t):
     '''unelse   : ELSE LLAVEIZQ instrucciones LLAVEDER
                 | ELSE IF logica LLAVEIZQ instrucciones LLAVEDER unelse
                 | empty '''
+    if len(t) == 5:
+        t.slice[0].type="ElSE"
+        t[0] = InstruccionElse(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalGenerico(t.slice[1], getNoNodo()))
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+        t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
+    elif len(t) == 7:
+        t[0] = t[1]
+    else:
+        t[0] = None
 
 def p_logica(t):
     '''logica   : logica AND logica
@@ -313,6 +330,36 @@ def p_rel(t):
     elif t[2] == '>': 
         t.slice[0].type="relacional";
         t[0] = NodoMayor(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '<': 
+        t.slice[0].type="relacional";
+        t[0] = NodoMenor(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '==': 
+        t.slice[0].type="relacional";
+        t[0] = NodoIgual(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '>=': 
+        t.slice[0].type="relacional";
+        t[0] = NodoMayorIgual(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '<=': 
+        t.slice[0].type="relacional";
+        t[0] = NodoMenorIgual(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '!=': 
+        t.slice[0].type="relacional";
+        t[0] = NodoNigual(t.slice[0], getNoNodo())
         t[0].hojas.append(t[1])
         t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
         t[0].hojas.append(t[3])
@@ -413,7 +460,8 @@ def p_expresion_number(t):
     elif type(t[1]) is TerminalCadena:
         print("es un string")
         t[0] =t.slice[1].value
-    
+    elif len(t)==3 and t[2]==None:
+        t[0] = TerminalIdentificador(t.slice[1], getNoNodo())
     
 
 
