@@ -1,7 +1,7 @@
 from parser.gramatica2 import parser
 from parser.entorno.Entorno import Entorno
 
-f = open("./entrada2.txt", "r")
+f = open("./entrada2.rs", "r")
 input = f.read()
 print(input)
 raiz = parser.parse(input)

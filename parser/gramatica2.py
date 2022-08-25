@@ -285,6 +285,14 @@ def p_instruccion(t):
         t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
         if t[6] is not None:
             t[0].hojas.append(t[6])
+    
+    elif t[1] == "while":
+        t.slice[0].type="WHILE";
+        t[0] = InstruccionWhile(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[2])
+        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+        t[0].hojas.append(t[4])
+        t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
 
 
 def p_opcionfor(t):
@@ -297,14 +305,21 @@ def p_unelse(t):
                 | ELSE IF logica LLAVEIZQ instrucciones LLAVEDER unelse
                 | empty '''
     if len(t) == 5:
-        t.slice[0].type="ElSE"
+        t.slice[0].type="ELSE"
         t[0] = InstruccionElse(t.slice[0], getNoNodo())
         t[0].hojas.append(TerminalGenerico(t.slice[1], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
         t[0].hojas.append(t[3])
         t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
-    elif len(t) == 7:
-        t[0] = t[1]
+    elif len(t) == 8:
+        t.slice[0].type="ELSE IF"
+        t[0] = InstruccionElseIf(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[3])
+        t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
+        t[0].hojas.append(t[5])
+        t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
+        if t[7] is not None:
+            t[0].hojas.append(t[7])
     else:
         t[0] = None
 
@@ -460,8 +475,14 @@ def p_expresion_number(t):
     elif type(t[1]) is TerminalCadena:
         print("es un string")
         t[0] =t.slice[1].value
+
     elif len(t)==3 and t[2]==None:
+        print("es un id")
         t[0] = TerminalIdentificador(t.slice[1], getNoNodo())
+    
+    elif t[1]=="true" or t[1]== "false":
+        print("si es")
+        t[0] = TerminalBool(t.slice[1], getNoNodo())
     
 
 

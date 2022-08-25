@@ -20,16 +20,37 @@ validador = {
         DataType.int64: {
             DataType.int64: DataType.int64,
             DataType.f64: DataType.f64
+        },
+        DataType.f64: {
+            DataType.int64: DataType.int64,
+            DataType.f64: DataType.f64
         }
     },
     '-': {
         DataType.int64: {
             DataType.int64: DataType.int64,
             DataType.f64: DataType.f64
+        },
+        DataType.f64: {
+            DataType.int64: DataType.int64,
+            DataType.f64: DataType.f64
         }
     },
     '*': {
         DataType.int64: {
+            DataType.int64: DataType.int64,
+            DataType.f64: DataType.f64
+        },
+        DataType.f64: {
+            DataType.int64: DataType.int64,
+            DataType.f64: DataType.f64
+        }
+    },'/': {
+        DataType.int64: {
+            DataType.int64: DataType.int64,
+            DataType.f64: DataType.f64
+        },
+        DataType.f64: {
             DataType.int64: DataType.int64,
             DataType.f64: DataType.f64
         }

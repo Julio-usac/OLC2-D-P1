@@ -3,3 +3,4 @@ from .InstruccionAsignacion import InstruccionAsignacion
 from .InstruccionIf import InstruccionIf
 from .InstruccionElse import InstruccionElse
 from .InstruccionElseIf import InstruccionElseIf
+from .InstruccionWhile import InstruccionWhile

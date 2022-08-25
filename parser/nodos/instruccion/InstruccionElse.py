@@ -9,6 +9,12 @@ class InstruccionElse(Nodo):
 
     def ejecutar(self, entorno):
         # else { instrucciones }
-        self.hojas[2].ejecutar(entorno)
+
+        ne = Entorno("entornoelse")
+        ne.asignarAnterior(entorno)
+        self.hojas[2].ejecutar(ne)
         self.copiar_valorhoja(2)
+        print("Entorno de else", ne.tabla_simbolos)
+        return
+
 

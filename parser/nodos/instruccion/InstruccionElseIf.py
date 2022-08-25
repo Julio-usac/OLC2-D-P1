@@ -10,20 +10,20 @@ class InstruccionElseIf(Nodo):
     def ejecutar(self, entorno):
         # else if expresion { instrucciones }
         # else if expresion { instrucciones } else/elseif
-        self.hojas[2].ejecutar(entorno)
-        if self.hojas[2].tipo == DataType.boolean:
-            if self.hojas[2].valor:
+        self.hojas[0].ejecutar(entorno)
+        if self.hojas[0].tipo == DataType.boolean:
+            if self.hojas[0].valor:
 
                 # instrucciones
-                ne = Entorno("entornoif")
+                ne = Entorno("entornoelseif")
                 ne.asignarAnterior(entorno)
-                self.hojas[4].ejecutar(ne)
-                self.copiar_valorhoja(4)
+                self.hojas[2].ejecutar(ne)
+                self.copiar_valorhoja(2)
                 print("Entorno de elseif", ne.tabla_simbolos)
                 return
             else:
-                if len(self.hojas) == 7:
-                    self.hojas[6].ejecutar(entorno)
-                    self.copiar_valorhoja(6)
+                if len(self.hojas) == 5:
+                    self.hojas[4].ejecutar(entorno)
+                    self.copiar_valorhoja(4)
                 return
         print('El tipo de dato debe ser booleano ')
