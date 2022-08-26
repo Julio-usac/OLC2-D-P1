@@ -286,6 +286,13 @@ def p_instruccion(t):
         if t[6] is not None:
             t[0].hojas.append(t[6])
     
+    elif t[1] == "println":
+        t.slice[0].type="PRINTLN";
+        t[0] = InstruccionPrint(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+        t[0].hojas.append(t[4])
+        t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
+    
     elif t[1] == "while":
         t.slice[0].type="WHILE";
         t[0] = InstruccionWhile(t.slice[0], getNoNodo())
@@ -447,7 +454,7 @@ def p_expresion_binaria(t):
 
 def p_expresion_unaria(t):
     'expresion : MENOS expresion %prec UMENOS'
-    #[0] = -t[2]
+    #t[0] = -t[2]
 
 def p_expresion_agrupacion(t):
     'expresion : PARIZQ logica PARDER'
@@ -465,11 +472,9 @@ def p_expresion_number(t):
                     | listarreglo'''
 
     if type(t[1]) is float:
-        print("es un decimal")
         t[0] = TerminalDecimal(t.slice[1], getNoNodo())
         
     elif type(t[1]) is int:
-        print("es un int")
         t[0] = TerminalEntero(t.slice[1], getNoNodo())
         
     elif type(t[1]) is TerminalCadena:
@@ -477,12 +482,11 @@ def p_expresion_number(t):
         t[0] =t.slice[1].value
 
     elif len(t)==3 and t[2]==None:
-        print("es un id")
         t[0] = TerminalIdentificador(t.slice[1], getNoNodo())
     
     elif t[1]=="true" or t[1]== "false":
-        print("si es")
         t[0] = TerminalBool(t.slice[1], getNoNodo())
+        
     
 
 
@@ -518,6 +522,14 @@ def p_listarreglo(t):
 def p_listexpr(t):
     '''listexpr : listexpr COMA expresion
                 | expresion'''
+                
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    
+    if len(t)==2:
+        t[0].hojas.insert(0,t[1])
+    else:
+        t[0].hojas=t[1].hojas
+        t[0].hojas.append(t[3])
     
 
 def p_empty(t):
