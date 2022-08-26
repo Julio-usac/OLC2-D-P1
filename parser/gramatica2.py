@@ -191,8 +191,8 @@ lexer = lex.lex()
 
 # Asociación de operadores y precedencia
 precedence = (
-    ('left','MAS','MENOS'),
-    ('left','POR','DIVIDIDO'),
+    ('left','MAS','MENOS','OR'),
+    ('left','POR','DIVIDIDO','MOD','AND'),
     ('right','UMENOS'),
     )
 
@@ -337,6 +337,23 @@ def p_logica(t):
                 | rel'''
     if len(t)== 2:
         t[0]=t[1]
+    elif t[2] == '&&': 
+        t.slice[0].type="logica";
+        t[0] = NodoAnd(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '||': 
+        t.slice[0].type="logica";
+        t[0] = NodoOr(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[1] == '!': 
+        t.slice[0].type="logica";
+        t[0] = NodoNot(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalGenerico(t.slice[1], getNoNodo()))
+        t[0].hojas.append(t[2])
 
 def p_rel(t):
     '''rel  : rel IGUAL IGUAL rel
@@ -419,8 +436,8 @@ def p_tipos(t):
                 | STRING
                 | AMP STR
                 | USIZE'''
-
-
+    t[0] = Terminalexp(t.slice[1], getNoNodo())
+    
 
 def p_expresion_binaria(t):
     '''expresion : expresion MAS expresion
@@ -448,6 +465,16 @@ def p_expresion_binaria(t):
         t[0].hojas.append(t[3])
     elif t[2] == '/': 
         t[0] = NodoDivision(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == '%': 
+        t[0] = NodoMod(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+    elif t[2] == 'as': 
+        t[0] = NodoAs(t.slice[0], getNoNodo())
         t[0].hojas.append(t[1])
         t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
         t[0].hojas.append(t[3])

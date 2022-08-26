@@ -4773,16 +4773,14 @@ state 164
     (37) logica -> logica . AND logica
     (38) logica -> logica . OR logica
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
     LLAVEIZQ        reduce using rule 37 (logica -> logica AND logica .)
+    AND             reduce using rule 37 (logica -> logica AND logica .)
+    OR              reduce using rule 37 (logica -> logica AND logica .)
     PTCOMA          reduce using rule 37 (logica -> logica AND logica .)
     PARDER          reduce using rule 37 (logica -> logica AND logica .)
-    AND             shift and go to state 121
-    OR              shift and go to state 122
 
-  ! AND             [ reduce using rule 37 (logica -> logica AND logica .) ]
-  ! OR              [ reduce using rule 37 (logica -> logica AND logica .) ]
+  ! AND             [ shift and go to state 121 ]
+  ! OR              [ shift and go to state 122 ]
 
 
 state 165
@@ -4791,16 +4789,14 @@ state 165
     (37) logica -> logica . AND logica
     (38) logica -> logica . OR logica
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
     LLAVEIZQ        reduce using rule 38 (logica -> logica OR logica .)
+    OR              reduce using rule 38 (logica -> logica OR logica .)
     PTCOMA          reduce using rule 38 (logica -> logica OR logica .)
     PARDER          reduce using rule 38 (logica -> logica OR logica .)
     AND             shift and go to state 121
-    OR              shift and go to state 122
 
   ! AND             [ reduce using rule 38 (logica -> logica OR logica .) ]
-  ! OR              [ reduce using rule 38 (logica -> logica OR logica .) ]
+  ! OR              [ shift and go to state 122 ]
 
 
 state 166
@@ -5102,7 +5098,6 @@ state 172
   ! reduce/reduce conflict for DPT resolved using rule 68 (expresion -> expresion MAS expresion .)
     MAS             reduce using rule 68 (expresion -> expresion MAS expresion .)
     MENOS           reduce using rule 68 (expresion -> expresion MAS expresion .)
-    MOD             reduce using rule 68 (expresion -> expresion MAS expresion .)
     AS              reduce using rule 68 (expresion -> expresion MAS expresion .)
     PT              reduce using rule 68 (expresion -> expresion MAS expresion .)
     IGUAL           reduce using rule 68 (expresion -> expresion MAS expresion .)
@@ -5121,12 +5116,13 @@ state 172
     CORDER          reduce using rule 68 (expresion -> expresion MAS expresion .)
     POR             shift and go to state 132
     DIVIDIDO        shift and go to state 133
+    MOD             shift and go to state 134
 
   ! POR             [ reduce using rule 68 (expresion -> expresion MAS expresion .) ]
   ! DIVIDIDO        [ reduce using rule 68 (expresion -> expresion MAS expresion .) ]
+  ! MOD             [ reduce using rule 68 (expresion -> expresion MAS expresion .) ]
   ! MAS             [ shift and go to state 130 ]
   ! MENOS           [ shift and go to state 131 ]
-  ! MOD             [ shift and go to state 134 ]
   ! AS              [ shift and go to state 135 ]
   ! PT              [ shift and go to state 136 ]
   ! DPT             [ reduce using rule 86 (opcionpow -> expresion .) ]
@@ -5152,7 +5148,6 @@ state 173
   ! reduce/reduce conflict for DPT resolved using rule 69 (expresion -> expresion MENOS expresion .)
     MAS             reduce using rule 69 (expresion -> expresion MENOS expresion .)
     MENOS           reduce using rule 69 (expresion -> expresion MENOS expresion .)
-    MOD             reduce using rule 69 (expresion -> expresion MENOS expresion .)
     AS              reduce using rule 69 (expresion -> expresion MENOS expresion .)
     PT              reduce using rule 69 (expresion -> expresion MENOS expresion .)
     IGUAL           reduce using rule 69 (expresion -> expresion MENOS expresion .)
@@ -5171,12 +5166,13 @@ state 173
     CORDER          reduce using rule 69 (expresion -> expresion MENOS expresion .)
     POR             shift and go to state 132
     DIVIDIDO        shift and go to state 133
+    MOD             shift and go to state 134
 
   ! POR             [ reduce using rule 69 (expresion -> expresion MENOS expresion .) ]
   ! DIVIDIDO        [ reduce using rule 69 (expresion -> expresion MENOS expresion .) ]
+  ! MOD             [ reduce using rule 69 (expresion -> expresion MENOS expresion .) ]
   ! MAS             [ shift and go to state 130 ]
   ! MENOS           [ shift and go to state 131 ]
-  ! MOD             [ shift and go to state 134 ]
   ! AS              [ shift and go to state 135 ]
   ! PT              [ shift and go to state 136 ]
   ! DPT             [ reduce using rule 86 (opcionpow -> expresion .) ]
@@ -5299,14 +5295,14 @@ state 176
     (96) expresion -> expresion . PT TOOWNED PARIZQ PARDER
     (86) opcionpow -> expresion .
 
-  ! shift/reduce conflict for MAS resolved as shift
-  ! shift/reduce conflict for MENOS resolved as shift
-  ! shift/reduce conflict for POR resolved as shift
-  ! shift/reduce conflict for DIVIDIDO resolved as shift
-  ! shift/reduce conflict for MOD resolved as shift
-  ! shift/reduce conflict for AS resolved as shift
-  ! shift/reduce conflict for PT resolved as shift
   ! reduce/reduce conflict for DPT resolved using rule 72 (expresion -> expresion MOD expresion .)
+    MAS             reduce using rule 72 (expresion -> expresion MOD expresion .)
+    MENOS           reduce using rule 72 (expresion -> expresion MOD expresion .)
+    POR             reduce using rule 72 (expresion -> expresion MOD expresion .)
+    DIVIDIDO        reduce using rule 72 (expresion -> expresion MOD expresion .)
+    MOD             reduce using rule 72 (expresion -> expresion MOD expresion .)
+    AS              reduce using rule 72 (expresion -> expresion MOD expresion .)
+    PT              reduce using rule 72 (expresion -> expresion MOD expresion .)
     IGUAL           reduce using rule 72 (expresion -> expresion MOD expresion .)
     MENOR           reduce using rule 72 (expresion -> expresion MOD expresion .)
     MAYOR           reduce using rule 72 (expresion -> expresion MOD expresion .)
@@ -5321,21 +5317,14 @@ state 176
     PARDER          reduce using rule 72 (expresion -> expresion MOD expresion .)
     COMA            reduce using rule 72 (expresion -> expresion MOD expresion .)
     CORDER          reduce using rule 72 (expresion -> expresion MOD expresion .)
-    MAS             shift and go to state 130
-    MENOS           shift and go to state 131
-    POR             shift and go to state 132
-    DIVIDIDO        shift and go to state 133
-    MOD             shift and go to state 134
-    AS              shift and go to state 135
-    PT              shift and go to state 136
 
-  ! MAS             [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
-  ! MENOS           [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
-  ! POR             [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
-  ! DIVIDIDO        [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
-  ! MOD             [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
-  ! AS              [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
-  ! PT              [ reduce using rule 72 (expresion -> expresion MOD expresion .) ]
+  ! MAS             [ shift and go to state 130 ]
+  ! MENOS           [ shift and go to state 131 ]
+  ! POR             [ shift and go to state 132 ]
+  ! DIVIDIDO        [ shift and go to state 133 ]
+  ! MOD             [ shift and go to state 134 ]
+  ! AS              [ shift and go to state 135 ]
+  ! PT              [ shift and go to state 136 ]
   ! DPT             [ reduce using rule 86 (opcionpow -> expresion .) ]
 
 
@@ -7021,10 +7010,6 @@ WARNING: shift/reduce conflict for MENOS in state 134 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 141 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 150 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 161 resolved as shift
-WARNING: shift/reduce conflict for AND in state 164 resolved as shift
-WARNING: shift/reduce conflict for OR in state 164 resolved as shift
-WARNING: shift/reduce conflict for AND in state 165 resolved as shift
-WARNING: shift/reduce conflict for OR in state 165 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 166 resolved as shift
 WARNING: shift/reduce conflict for IGUAL in state 167 resolved as shift
 WARNING: shift/reduce conflict for MENOR in state 167 resolved as shift
@@ -7056,13 +7041,6 @@ WARNING: shift/reduce conflict for MAYOR in state 171 resolved as shift
 WARNING: shift/reduce conflict for MEIGUAL in state 171 resolved as shift
 WARNING: shift/reduce conflict for MAIGUAL in state 171 resolved as shift
 WARNING: shift/reduce conflict for DIS in state 171 resolved as shift
-WARNING: shift/reduce conflict for MAS in state 176 resolved as shift
-WARNING: shift/reduce conflict for MENOS in state 176 resolved as shift
-WARNING: shift/reduce conflict for POR in state 176 resolved as shift
-WARNING: shift/reduce conflict for DIVIDIDO in state 176 resolved as shift
-WARNING: shift/reduce conflict for MOD in state 176 resolved as shift
-WARNING: shift/reduce conflict for AS in state 176 resolved as shift
-WARNING: shift/reduce conflict for PT in state 176 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 187 resolved as shift
 WARNING: shift/reduce conflict for PT in state 195 resolved as shift
 WARNING: shift/reduce conflict for IGUAL in state 210 resolved as shift

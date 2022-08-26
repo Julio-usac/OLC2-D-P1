@@ -34,7 +34,9 @@ class Nodo(ABC):
         if result2 == DataType.error:
             self.tipo = result2
             return
-        self.tipo = result2.get(tipo2, DataType.error)
+        if tipo1==tipo2:
+
+            self.tipo = result2.get(tipo2, DataType.error)
 
     def copiar_valorhoja(self, nohoja):
         if nohoja < len(self.hojas):

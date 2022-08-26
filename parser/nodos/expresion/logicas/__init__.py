@@ -4,3 +4,6 @@ from .NodoIgual import NodoIgual
 from .NodoNigual import NodoNigual
 from .NodoMayorIgual import NodoMayorIgual
 from .NodoMenorIgual import NodoMenorIgual
+from .NodoAnd import NodoAnd
+from .NodoOr import NodoOr
+from .NodoNot import NodoNot
