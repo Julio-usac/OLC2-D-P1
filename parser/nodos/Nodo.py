@@ -9,6 +9,7 @@ class Nodo(ABC):
         self.valor = token.value
         self.id_nodo = id_nodo
         self.hojas = []
+        self.es_expresion = False
         super().__init__()
 
     def obtener_dot(self):
@@ -34,9 +35,12 @@ class Nodo(ABC):
         if result2 == DataType.error:
             self.tipo = result2
             return
-        if tipo1==tipo2:
+        if tipo1==tipo2 and result2.get(tipo2, DataType.error)!=DataType.cadena:
 
             self.tipo = result2.get(tipo2, DataType.error)
+
+        elif result2.get(tipo2, DataType.error)==DataType.cadena:
+            self.tipo=result2.get(tipo2, DataType.error)
 
     def copiar_valorhoja(self, nohoja):
         if nohoja < len(self.hojas):

@@ -11,6 +11,8 @@ class DataType(enum.Enum):
     int64 = 1
     f64 = 2
     boolean = 3
+    cadena = 4
+    direccion = 5
 
 
 global validator
@@ -24,6 +26,12 @@ validador = {
         DataType.f64: {
             DataType.int64: DataType.int64,
             DataType.f64: DataType.f64
+        },
+        DataType.cadena: {
+            DataType.direccion: DataType.cadena
+        },
+        DataType.direccion: {
+            DataType.cadena: DataType.cadena
         }
     },
     '-': {

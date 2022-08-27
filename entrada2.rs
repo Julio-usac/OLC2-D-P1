@@ -1,4 +1,13 @@
 fn main () {
+   
+
+
+   let mut t2 : String = if 5>4 { 
+      5*5 
+   }; 
+
+   let mut t : String = "shit" + "lala".to_string();
+
 
    let mut s : f64 = (7.0 * 8.2) ;
 
@@ -9,7 +18,7 @@ fn main () {
    if (4<5 && !m) {
       let mut z : i64 = "dino";
 
-      println!("{}",z);
+      println!("bolo {}",z);
    }else if 5 > 5{
       let mut b : String = 45;
    }else{

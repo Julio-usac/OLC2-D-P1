@@ -302,6 +302,64 @@ def p_instruccion(t):
         t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
 
 
+def p_lista_instruccionesexp(t):
+    '''instruccionesexp :  instruccion instruccionesexpfin
+                    | instruccionesexpfin '''
+    t[0] = InstruccionGenerico(t.slice[0], getNoNodo())
+    if len(t) == 3:
+        t[0].hojas.append(t[1])
+        if t[2] is not None:
+            t[0].hojas.append(t[2])
+    else:
+        if t[1] is not None:
+            t[0].hojas.append(t[1])
+
+
+def p_lista_instruccionesexpfin(t):
+    '''instruccionesexpfin :  instruccionesexp
+                    | expresion
+                    | '''
+    if len(t) == 2:
+        t[0] = t[1]
+        print(t[1].nombre)
+    else:
+        t[0] = None
+
+
+def p_funcion_if(t):
+    '''instrif : IF logica LLAVEIZQ instruccionesexp LLAVEDER instrelse'''
+    t.slice[0].type="IF";
+    t[0] = InstruccionIf(t.slice[0], getNoNodo())
+    t[0].hojas.append(t[2])
+    t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+    t[0].hojas.append(t[4])
+    t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
+    if t[6] is not None:
+        t[0].hojas.append(t[6])
+
+def p_funcion_else(t):
+    '''instrelse : ELSE LLAVEIZQ instruccionesexp LLAVEDER
+                | ELSE IF logica LLAVEIZQ instruccionesexp LLAVEDER instrelse
+                | empty '''
+    if len(t) == 5:
+        t.slice[0].type="ELSE"
+        t[0] = InstruccionElse(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalGenerico(t.slice[1], getNoNodo()))
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+        t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
+    elif len(t) == 8:
+        t.slice[0].type="ELSE IF"
+        t[0] = InstruccionElseIf(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[3])
+        t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
+        t[0].hojas.append(t[5])
+        t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
+        if t[7] is not None:
+            t[0].hojas.append(t[7])
+    else:
+        t[0] = None
+
 def p_opcionfor(t):
     '''opcionfor    : logica
                     | ENTERO PT PT logica
@@ -479,6 +537,12 @@ def p_expresion_binaria(t):
         t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
         t[0].hojas.append(t[3])
 
+def p_expresion_if(t):
+    '''expresion : instrif'''
+    t.slice[0].type="saonda"
+    t[0] = NodoExpresion(t.slice[0], getNoNodo())
+    t[0].hojas.append(t[1])
+
 def p_expresion_unaria(t):
     'expresion : MENOS expresion %prec UMENOS'
     #t[0] = -t[2]
@@ -497,23 +561,24 @@ def p_expresion_number(t):
                     | ID listarreglo
                     | ID PARIZQ listexpr PARDER
                     | listarreglo'''
+    t.slice[0].type="saonda"
+    t[0] = NodoExpresion(t.slice[0], getNoNodo())
 
     if type(t[1]) is float:
-        t[0] = TerminalDecimal(t.slice[1], getNoNodo())
+        
+        t[0].hojas.append(TerminalDecimal(t.slice[1], getNoNodo()))
         
     elif type(t[1]) is int:
-        t[0] = TerminalEntero(t.slice[1], getNoNodo())
+        t[0].hojas.append(TerminalEntero(t.slice[1], getNoNodo()))
         
     elif type(t[1]) is TerminalCadena:
-        print("es un string")
-        t[0] =t.slice[1].value
+        t[0].hojas.append(t.slice[1].value)
 
     elif len(t)==3 and t[2]==None:
-        t[0] = TerminalIdentificador(t.slice[1], getNoNodo())
+        t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
     
     elif t[1]=="true" or t[1]== "false":
-        t[0] = TerminalBool(t.slice[1], getNoNodo())
-        
+        t[0].hojas.append(TerminalBool(t.slice[1], getNoNodo()))
     
 
 
@@ -541,6 +606,10 @@ def p_expresion_fnativas(t):
                     | expresion PT LEN PARIZQ PARDER
                     | expresion PT TOOWNED PARIZQ PARDER'''
 
+    if t[3]=="to_owned" or t[3]=="to_string":
+        t[0]= Funcioncadena(t.slice[0],getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
 
 def p_listarreglo(t):
     '''listarreglo  : listarreglo CORIZQ listexpr CORDER
@@ -565,6 +634,7 @@ def p_empty(t):
 
 
 def p_error(t):
+    print(t.type)
     print("Error sintáctico en '%s'"  % t.lexer.lineno)
 
 import ply.yacc as yacc

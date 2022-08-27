@@ -19,7 +19,7 @@ class InstruccionIf(Nodo):
                 self.hojas[2].ejecutar(ne)
                 self.copiar_valorhoja(2)
                 print("Entorno de if", ne.tabla_simbolos)
-                
+                return
             else:
                 if len(self.hojas) == 5:
                     self.hojas[4].ejecutar(entorno)

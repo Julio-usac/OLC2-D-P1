@@ -1,3 +1,4 @@
+from parser.entorno.Tipos import DataType
 from parser.nodos.Nodo import Nodo
 
 
@@ -5,6 +6,7 @@ class TerminalCadena(Nodo):
     def __init__(self, token, id_nodo):
         super().__init__(token, id_nodo)
         self.nombre = self.valor
+        self.tipo = DataType.direccion
         self.no_formatos = 0
 
     def ejecutar(self, entorno):

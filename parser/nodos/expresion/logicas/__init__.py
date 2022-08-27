@@ -7,3 +7,4 @@ from .NodoMenorIgual import NodoMenorIgual
 from .NodoAnd import NodoAnd
 from .NodoOr import NodoOr
 from .NodoNot import NodoNot
+from .Funcioncadena import Funcioncadena

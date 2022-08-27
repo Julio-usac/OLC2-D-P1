@@ -8,7 +8,9 @@ class InstruccionPrint(Nodo):
         pvar=""
         cont2=0
         cont3=1
-        for hoja in self.hojas[1].hojas[0].hojas:
+        
+
+        for hoja in self.hojas[1].hojas[0].hojas[0].hojas:
 
             if hoja.nombre=="{}":
                 cont2=cont3
