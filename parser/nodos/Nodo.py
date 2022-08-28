@@ -10,6 +10,7 @@ class Nodo(ABC):
         self.id_nodo = id_nodo
         self.hojas = []
         self.es_expresion = False
+        self.trans="no"
         super().__init__()
 
     def obtener_dot(self):

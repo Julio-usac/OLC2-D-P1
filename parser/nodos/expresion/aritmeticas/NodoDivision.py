@@ -13,5 +13,5 @@ class NodoDivision(Nodo):
         if self.tipo==DataType.f64:
 
             self.valor = round(self.hojas[0].valor / self.hojas[2].valor,1)
-        elif self.tipo==DataType.i64:
-            self.valor = int(self.hojas[0].valor / self.hojas[2].valor,1)
+        elif self.tipo==DataType.int64:
+            self.valor = int(self.hojas[0].valor / self.hojas[2].valor)

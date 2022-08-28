@@ -17,9 +17,16 @@ class InstruccionWhile(Nodo):
                 ne = Entorno("entornowhile")
                 ne.asignarAnterior(entorno)
                 self.hojas[2].ejecutar(ne)
-                self.copiar_valorhoja(2)
-                print("Entorno de while", ne.tabla_simbolos)
                 self.hojas[0].ejecutar(entorno)
+            
+                if self.hojas[2].trans=="break":
+                    
+                    break
+                elif self.hojas[2].trans=="continue":
+                    continue
+                
+                #print("Entorno de while", ne.tabla_simbolos)
+                
             return
 
         print('El tipo de dato debe ser booleano')

@@ -264,10 +264,7 @@ def p_instruccion(t):
                     | PRINT NOT PARIZQ listexpr PARDER PTCOMA
                     | IF logica LLAVEIZQ instrucciones LLAVEDER unelse
                     | LOOP LLAVEIZQ instrucciones LLAVEDER
-                    | BREAK logica PTCOMA
-                    | BREAK PTCOMA
                     | RETURN logica PTCOMA
-                    | CONTINUE PTCOMA
                     | WHILE logica LLAVEIZQ instrucciones LLAVEDER
                     | FOR ID IN opcionfor LLAVEIZQ instrucciones LLAVEDER'''
     
@@ -307,6 +304,31 @@ def p_instruccion(t):
         t[0].hojas.append(t[4])
         t[0].hojas.append(TerminalGenerico(t.slice[5], getNoNodo()))
 
+    elif t[1] == "loop":
+        t.slice[0].type="LOOP";
+        t[0] = InstruccionLoop(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[3])
+        t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
+    
+
+
+def p_instruccion_trans(t):
+    '''instruccion  : BREAK PTCOMA
+                    | CONTINUE PTCOMA
+                    | BREAK logica PTCOMA'''
+    if t[1] == "break" and len(t)==3:
+        t.slice[0].type="break";
+        t[0] = InstruccionTrans(t.slice[0], getNoNodo())
+
+    elif t[1] == "continue":
+        t.slice[0].type="continue";
+        t[0] = InstruccionTrans(t.slice[0], getNoNodo())
+
+    elif t[1] == "break" and len(t)==4:
+        t.slice[0].type="break";
+        t[0] = InstruccionTrans(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[2])
 
 def p_lista_instruccionesexp(t):
     '''instruccionesexp :  instruccion instruccionesexpfin
@@ -331,6 +353,13 @@ def p_lista_instruccionesexpfin(t):
     else:
         t[0] = None
 
+def p_funcion_loop(t):
+    '''instrloop : LOOP LLAVEIZQ instrucciones LLAVEDER'''
+    t.slice[0].type="LOOP";
+    t[0] = InstruccionLoop(t.slice[0], getNoNodo())
+    t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
+    t[0].hojas.append(t[3])
+    t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
 
 def p_funcion_if(t):
     '''instrif : IF logica LLAVEIZQ instruccionesexp LLAVEDER instrelse'''
@@ -546,7 +575,7 @@ def p_expresion_binaria(t):
 
 def p_expresion_if(t):
     '''expresion : instrif'''
-    t.slice[0].type="saonda"
+    t.slice[0].type="exIF"
     t[0] = NodoExpresion(t.slice[0], getNoNodo())
     t[0].hojas.append(t[1])
 
@@ -609,8 +638,10 @@ def p_expresion_pow(t):
 
 
 def p_expresion_loop(t):
-    '''expresion    : LOOP LLAVEIZQ instrucciones LLAVEDER'''
-
+    '''expresion    : instrloop'''
+    t.slice[0].type="exloop"
+    t[0] = NodoExpresion(t.slice[0], getNoNodo())
+    t[0].hojas.append(t[1])
 
 def p_expresion_fnativas(t):
     '''expresion    : expresion PT TOSTRING PARIZQ PARDER

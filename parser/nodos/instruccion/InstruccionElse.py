@@ -13,8 +13,9 @@ class InstruccionElse(Nodo):
         ne = Entorno("entornoelse")
         ne.asignarAnterior(entorno)
         self.hojas[2].ejecutar(ne)
+        self.trans=self.hojas[2].trans
         self.copiar_valorhoja(2)
-        print("Entorno de else", ne.tabla_simbolos)
+        #print("Entorno de else", ne.tabla_simbolos)
         return
 
 

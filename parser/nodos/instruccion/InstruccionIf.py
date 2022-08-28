@@ -17,12 +17,14 @@ class InstruccionIf(Nodo):
                 ne = Entorno("entornoif")
                 ne.asignarAnterior(entorno)
                 self.hojas[2].ejecutar(ne)
+                self.trans=self.hojas[2].trans
                 self.copiar_valorhoja(2)
-                print("Entorno de if", ne.tabla_simbolos)
+                #print("Entorno de if", ne.tabla_simbolos)
                 return
             else:
                 if len(self.hojas) == 5:
                     self.hojas[4].ejecutar(entorno)
+                    self.trans=self.hojas[4].trans
                     self.copiar_valorhoja(4)
             return
         

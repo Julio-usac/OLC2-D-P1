@@ -5,6 +5,12 @@ class InstruccionGenerico(Nodo):
         super().__init__(token, id_nodo)
 
     def ejecutar(self, entorno):
+        cont=0
         for hoja in self.hojas:
+            cont+=1
             hoja.ejecutar(entorno)
-        self.copiar_valorhoja(len(self.hojas)-1)
+            self.trans=hoja.trans
+            if hoja.trans !="no":
+                break
+        
+        self.copiar_valorhoja(cont-1)
