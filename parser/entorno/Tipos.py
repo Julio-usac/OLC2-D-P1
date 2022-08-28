@@ -13,6 +13,7 @@ class DataType(enum.Enum):
     boolean = 3
     cadena = 4
     direccion = 5
+    char=6
 
 
 global validator

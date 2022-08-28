@@ -59,6 +59,7 @@ tokens  = [
     'DECIMAL',
     'ENTERO',
     'PTCOMA',
+    'CHARE',
     'FORM',
     'LLAVEIZQ',
     'LLAVEDER',
@@ -131,7 +132,7 @@ def t_ID(t):
      r'[a-zA-Z_][a-zA-Z_0-9]*'
      t.type = reservadas.get(t.value,'ID')    # Check for reserved words
      return t
-     
+ 
 
 def t_FORM(t):
     r'\".*?\"'
@@ -168,7 +169,12 @@ def t_FORM(t):
     t.value = nodoCadena
     return t
 
-
+def t_CHARE(t):
+    r'\'.*?\''
+    t.value = t.value[1:-1]  # Quitamos las comillas
+    nodoCadena = TerminalChar(t, getNoNodo())
+    t.value=nodoCadena
+    return t  
 
 # Caracteres ignorados
 t_ignore = " \t"
@@ -436,12 +442,13 @@ def p_rel(t):
         t[0].hojas.append(t[1])
         t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
         t[0].hojas.append(t[3])
-    elif t[2] == '==': 
+    elif t[2] == '=' and t[3] == '=' : 
         t.slice[0].type="relacional";
+        t.slice[2].value="==";
         t[0] = NodoIgual(t.slice[0], getNoNodo())
         t[0].hojas.append(t[1])
         t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
-        t[0].hojas.append(t[3])
+        t[0].hojas.append(t[4])
     elif t[2] == '>=': 
         t.slice[0].type="relacional";
         t[0] = NodoMayorIgual(t.slice[0], getNoNodo())
@@ -545,7 +552,10 @@ def p_expresion_if(t):
 
 def p_expresion_unaria(t):
     'expresion : MENOS expresion %prec UMENOS'
-    #t[0] = -t[2]
+    t[0]= Funcioncadena(t.slice[0],getNoNodo())
+    t[0].hojas.append(t[2])
+    t[0].hojas.append(TerminalGenerico(t.slice[1], getNoNodo()))
+    
 
 def p_expresion_agrupacion(t):
     'expresion : PARIZQ logica PARDER'
@@ -561,7 +571,7 @@ def p_expresion_number(t):
                     | ID listarreglo
                     | ID PARIZQ listexpr PARDER
                     | listarreglo'''
-    t.slice[0].type="saonda"
+    
     t[0] = NodoExpresion(t.slice[0], getNoNodo())
 
     if type(t[1]) is float:
@@ -579,7 +589,11 @@ def p_expresion_number(t):
     
     elif t[1]=="true" or t[1]== "false":
         t[0].hojas.append(TerminalBool(t.slice[1], getNoNodo()))
-    
+
+def p_expresion_char(t):
+    '''expresion    : CHARE'''
+    t[0] = NodoExpresion(t.slice[0], getNoNodo())
+    t[0].hojas.append(t.slice[1].value)
 
 
 def p_expresion_mod(t):
@@ -606,10 +620,11 @@ def p_expresion_fnativas(t):
                     | expresion PT LEN PARIZQ PARDER
                     | expresion PT TOOWNED PARIZQ PARDER'''
 
-    if t[3]=="to_owned" or t[3]=="to_string":
-        t[0]= Funcioncadena(t.slice[0],getNoNodo())
-        t[0].hojas.append(t[1])
-        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+    
+    t[0]= Funcioncadena(t.slice[0],getNoNodo())
+    t[0].hojas.append(t[1])
+    t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+
 
 def p_listarreglo(t):
     '''listarreglo  : listarreglo CORIZQ listexpr CORDER

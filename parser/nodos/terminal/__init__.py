@@ -5,3 +5,4 @@ from .TerminalCadena import TerminalCadena
 from .TerminalDecimal import TerminalDecimal
 from .TerminalBool import TerminalBool
 from .Terminalexp import Terminalexp
+from .TerminalChar import TerminalChar
