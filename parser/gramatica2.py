@@ -74,6 +74,7 @@ tokens  = [
     'IGUAL',
     'AND',
     'OR',
+    'PT2',
     'PT',
     'MOD',
     'AMP',
@@ -106,6 +107,7 @@ t_AND       = r'&&'
 t_AMP       = r'&'
 t_MOD       = r'%'
 t_OR        = r'\|\|'
+t_PT2        = r'\.\.'
 t_PT        = r'\.'
 
 
@@ -311,6 +313,13 @@ def p_instruccion(t):
         t[0].hojas.append(t[3])
         t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
     
+    elif t[1] == "for":
+        t.slice[0].type="FOR";
+        t[0] = InstruccionFor(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalIdentificador(t.slice[2], getNoNodo()))
+        t[0].hojas.append(t[4])
+        t[0].hojas.append(t[6])
+    
 
 
 def p_instruccion_trans(t):
@@ -396,9 +405,12 @@ def p_funcion_else(t):
         t[0] = None
 
 def p_opcionfor(t):
-    '''opcionfor    : logica
-                    | ENTERO PT PT logica
+    '''opcionfor    : logica PT2 logica
                     | empty '''
+    if len(t)==4:
+        t[0]= NodoPuntos(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[1])
+        t[0].hojas.append(t[3])
 
 def p_unelse(t):
     '''unelse   : ELSE LLAVEIZQ instrucciones LLAVEDER

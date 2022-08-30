@@ -7,3 +7,5 @@ from .InstruccionWhile import InstruccionWhile
 from .InstruccionPrint import InstruccionPrint
 from .InstruccionTrans import InstruccionTrans
 from .InstruccionLoop import InstruccionLoop
+from .InstruccionFor import InstruccionFor
+

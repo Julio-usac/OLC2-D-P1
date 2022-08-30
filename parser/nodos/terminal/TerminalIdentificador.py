@@ -10,3 +10,5 @@ class TerminalIdentificador(Nodo):
         if valvar != None:
             self.valor = valvar['valor']
             self.tipo = valvar['tipo']
+        else:
+            self.valor = None

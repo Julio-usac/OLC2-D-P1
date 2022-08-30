@@ -16,7 +16,7 @@ class Funcioncadena(Nodo):
         elif self.hojas[1].nombre=="abs":
             self.hojas[0].ejecutar(entorno)
             self.tipo=self.hojas[0].tipo
-            self.valor= abs(self.hojas[0].valor)
+            self.valor= int(abs(self.hojas[0].valor))
         
         elif self.hojas[1].nombre=="sqrt":
             self.hojas[0].ejecutar(entorno)

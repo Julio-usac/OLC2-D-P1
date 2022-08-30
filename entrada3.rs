@@ -1,12 +1,9 @@
 fn main () {
-   
-  let mut cont = 0;
-  let result = loop {
-    cont = cont + 1;
-    if cont == 10 {
-      break cont * 2;
-    }
-  };
-  println!("El resultado es {}", result);
+ 
+
+  for n in 1..4 { // Recorre rango de 1:4
+    println!("{ } ", n); // Únicamente se recorre ascendentemente
+  } // Imprime 1 2 3
+  println!("termino");
 
 }

@@ -14,6 +14,8 @@ class DataType(enum.Enum):
     cadena = 4
     direccion = 5
     char=6
+    vector=7
+    arreglo=8
 
 
 global validator
