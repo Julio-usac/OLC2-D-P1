@@ -358,7 +358,6 @@ def p_lista_instruccionesexpfin(t):
                     | '''
     if len(t) == 2:
         t[0] = t[1]
-        print(t[1].nombre)
     else:
         t[0] = None
 
@@ -406,11 +405,13 @@ def p_funcion_else(t):
 
 def p_opcionfor(t):
     '''opcionfor    : logica PT2 logica
-                    | empty '''
+                    | logica '''
     if len(t)==4:
         t[0]= NodoPuntos(t.slice[0], getNoNodo())
         t[0].hojas.append(t[1])
         t[0].hojas.append(t[3])
+    elif len(t)==2:
+        t[0]=t[1]
 
 def p_unelse(t):
     '''unelse   : ELSE LLAVEIZQ instrucciones LLAVEDER
@@ -524,10 +525,7 @@ def p_arrtipos(t):
                 | arreglos
                 | empty '''
 
-def p_vectores(t):
-    '''vectores : tipos
-                | arreglos
-                | empty '''
+
 
 def p_arreglos(t):
     '''arreglos : CORIZQ arreglos PTCOMA ENTERO CORDER
@@ -609,9 +607,7 @@ def p_expresion_number(t):
                     | TRUE
                     | FALSE
                     | VECM NOT listarreglo
-                    | ID listarreglo
-                    | ID PARIZQ listexpr PARDER
-                    | listarreglo'''
+                    | ID PARIZQ listexpr PARDER'''
     
     t[0] = NodoExpresion(t.slice[0], getNoNodo())
 
@@ -624,12 +620,26 @@ def p_expresion_number(t):
         
     elif type(t[1]) is TerminalCadena:
         t[0].hojas.append(t.slice[1].value)
-
-    elif len(t)==3 and t[2]==None:
-        t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
     
     elif t[1]=="true" or t[1]== "false":
         t[0].hojas.append(TerminalBool(t.slice[1], getNoNodo()))
+
+def p_expresion_id(t):
+    '''expresion    : ID'''
+    t[0] = NodoExpresion(t.slice[0], getNoNodo())
+    t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
+
+def p_expresion_idarreglo(t):
+    '''expresion    : ID CORIZQ expresion CORDER'''
+    t[0]=TerminalArreglo2(t.slice[0], getNoNodo())
+    t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
+    t[0].hojas.append(t[3])
+
+def p_expresion_arre(t):
+    '''expresion    : CORIZQ listexpr CORDER'''
+    t[0]=TerminalArreglo(t.slice[0], getNoNodo())
+    t[0].hojas.append(t[2])
+
 
 def p_expresion_char(t):
     '''expresion    : CHARE'''
@@ -639,6 +649,10 @@ def p_expresion_char(t):
 
 def p_expresion_mod(t):
     '''expresion    : opcionpow DPT DPT expresion'''
+
+def p_expresion_amp(t):
+    '''expresion    : AMP expresion'''
+    t[0]=t[2]
 
 def p_opcionpow(t):
     '''opcionpow    : expresion
@@ -669,13 +683,15 @@ def p_expresion_fnativas(t):
     t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
 
 
+
 def p_listarreglo(t):
     '''listarreglo  : listarreglo CORIZQ listexpr CORDER
                     | empty '''
 
+
 def p_listexpr(t):
-    '''listexpr : listexpr COMA expresion
-                | expresion'''
+    '''listexpr : listexpr COMA logica
+                | logica'''
                 
     t[0]=Terminalexp(t.slice[0], getNoNodo())
     

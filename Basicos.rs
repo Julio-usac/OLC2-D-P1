@@ -91,7 +91,7 @@ fn main() {
     
     println!("");
     println!("*************PRUEBA DE NATIVAS");
-    println!(" valor de b: {}",b);
+    println!(" valor de b: {:?}",b);
     
     println!(" valor absoluto1: {}",abs1.abs());
     println!(" valor absoluto2: {}",abs2.abs());
@@ -99,5 +99,3 @@ fn main() {
     println!(" valor raiz2: {}",raiz2.sqrt());
     
 }
-
-

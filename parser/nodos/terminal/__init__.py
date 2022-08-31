@@ -6,3 +6,5 @@ from .TerminalDecimal import TerminalDecimal
 from .TerminalBool import TerminalBool
 from .Terminalexp import Terminalexp
 from .TerminalChar import TerminalChar
+from .TerminalArreglo import TerminalArreglo
+from .TerminalArreglo2 import TerminalArreglo2

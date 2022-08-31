@@ -33,3 +33,9 @@ class Funcioncadena(Nodo):
             self.hojas[0].ejecutar(entorno)
             self.tipo=self.hojas[0].tipo
             self.valor= self.hojas[0].valor* -1
+        
+        elif self.hojas[1].nombre=="len":
+            self.hojas[0].ejecutar(entorno)
+            self.tipo=DataType.int64
+            
+            self.valor= len(self.hojas[0].valor)

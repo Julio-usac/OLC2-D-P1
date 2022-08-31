@@ -29,4 +29,4 @@ class InstruccionFor(Nodo):
                 
         return
 
-        print('El tipo de dato debe ser booleano')
+       
