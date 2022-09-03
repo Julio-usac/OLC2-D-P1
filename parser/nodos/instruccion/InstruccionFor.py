@@ -18,7 +18,7 @@ class InstruccionFor(Nodo):
         for var in self.hojas[1].valor:
             ne = Entorno("entornofor")
             ne.asignarAnterior(entorno)
-            ne.agregarVariable(self.hojas[0].nombre, var, DataType.int64)
+            ne.agregarVariable(self.hojas[0].nombre, var, DataType.int64, "local", "Variable","1")
 
             self.hojas[2].ejecutar(ne)
             if self.hojas[2].trans=="break":

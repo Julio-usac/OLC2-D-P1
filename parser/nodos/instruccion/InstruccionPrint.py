@@ -25,6 +25,8 @@ class InstruccionPrint(Nodo):
                         pvar+=str(hoja2.valor)
                         break
             else:
+                
+                hoja.nombre=hoja.nombre.replace(":?","")
                 pvar+=hoja.nombre
                 
         print(pvar)

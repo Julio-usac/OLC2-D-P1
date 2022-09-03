@@ -273,11 +273,13 @@ def p_instruccion(t):
     if t[1] == "let":
         t.slice[0].type="Asignacion";
         t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
+        t[0].linea=t.lexer.lineno
         t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
         t[0].hojas.append(t[7])
     elif t[3] == "=":
         t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
+        t[0].linea=t.lexer.lineno
         t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
         t[0].hojas.append(t[4])
@@ -648,20 +650,19 @@ def p_expresion_char(t):
 
 
 def p_expresion_mod(t):
-    '''expresion    : opcionpow DPT DPT expresion'''
+    '''expresion    : expresion DPT DPT expresion'''
 
 def p_expresion_amp(t):
     '''expresion    : AMP expresion'''
     t[0]=t[2]
 
-def p_opcionpow(t):
-    '''opcionpow    : expresion
-                    | tipos'''
-
 def p_expresion_pow(t):
-    '''expresion    : POW PARIZQ ENTERO COMA ENTERO PARDER
-                    | POWF PARIZQ DECIMAL COMA DECIMAL PARDER'''
-
+    '''expresion    : tipos DPT DPT POW PARIZQ ENTERO COMA ENTERO PARDER
+                    | tipos DPT DPT POWF PARIZQ DECIMAL COMA DECIMAL PARDER'''
+    t.slice[0].type=t[4]
+    t[0] = NodoPow(t.slice[0], getNoNodo())
+    t[0].hojas.append(TerminalDecimal(t.slice[6], getNoNodo()))
+    t[0].hojas.append(TerminalDecimal(t.slice[8], getNoNodo()))
 
 def p_expresion_loop(t):
     '''expresion    : instrloop'''

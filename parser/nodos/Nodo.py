@@ -11,6 +11,7 @@ class Nodo(ABC):
         self.hojas = []
         self.es_expresion = False
         self.trans="no"
+        self.linea=0
         super().__init__()
 
     def obtener_dot(self):

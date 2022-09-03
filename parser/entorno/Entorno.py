@@ -4,9 +4,9 @@ class Entorno():
         self.tabla_simbolos = {}
         self.entorno_anterior = None
 
-    def agregarVariable(self, nombre_variable, valor, tipo):
+    def agregarVariable(self, nombre_variable, valor, tipo, ambito, tsimbolo, linea):
         # Validaciones
-        simbolo = {'valor': valor, 'tipo': tipo}
+        simbolo = {'valor': valor, 'tipo': tipo , 'ambito': ambito, 'tsimbolo': tsimbolo, 'linea': linea }
         if self.tabla_simbolos.get(nombre_variable, None) != None:
             self.tabla_simbolos[nombre_variable] = simbolo
             return

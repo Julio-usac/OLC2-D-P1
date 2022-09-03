@@ -1,0 +1,10 @@
+digraph G { 
+node[shape=plaintext, color=blue] 
+ struct1 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+<TR><TD><b>ID</b></TD><TD><b>Tipo de simbolo</b></TD><TD><b>Tipo de dato</b></TD><TD><b>Ambito</b></TD><TD><b>Fila</b></TD></TR>
+<TR><TD>a</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>103</TD></TR>
+<TR><TD>aux</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>21</TD></TR>
+<TR><TD>index</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>80</TD></TR>
+<TR><TD>arr</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>141</TD></TR>
+</TABLE>>];}
