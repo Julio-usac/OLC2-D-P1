@@ -32,6 +32,7 @@ reservadas = {
     'sqrt' : 'SQRT',
     'clone' : 'CLONE',
     'abs' : 'ABS',
+    'contains' : 'CONTA',
     'if' : 'IF',
     'else' : 'ELSE',
     'match' : 'MATCH',
@@ -277,7 +278,7 @@ def p_instruccion(t):
         t[0].hojas.append(TerminalIdentificador(t.slice[3], getNoNodo()))
         t[0].hojas.append(TerminalGenerico(t.slice[6], getNoNodo()))
         t[0].hojas.append(t[7])
-    elif t[3] == "=":
+    elif t[3] == "=" and t[2]== None:
         t[0] = InstruccionAsignacion(t.slice[0], getNoNodo())
         t[0].linea=t.lexer.lineno
         t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
@@ -322,6 +323,12 @@ def p_instruccion(t):
         t[0].hojas.append(t[4])
         t[0].hojas.append(t[6])
     
+    elif t[3] == "=" and t[2]!= None:
+        t[0] = InstruccionAsignacion2(t.slice[0], getNoNodo())
+        t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
+        t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+        t[0].hojas.append(t[4])
+        t[0].hojas.append(t[2])
 
 
 def p_instruccion_trans(t):
@@ -694,12 +701,18 @@ def p_expresion_fnativas(t):
     t[0].hojas.append(t[1])
     t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
 
-
+def p_expresion_arreglonat(t):
+    '''expresion    : expresion PT CONTA PARIZQ expresion PARDER'''
+    t[0]= Funcioncadena(t.slice[0],getNoNodo())
+    t[0].hojas.append(t[1])
+    t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
+    t[0].hojas.append(t[5])
 
 def p_listarreglo(t):
-    '''listarreglo  : listarreglo CORIZQ listexpr CORDER
+    '''listarreglo  : listaarreglo
                     | empty '''
-
+    if t[1]!=None:
+        t[0]=t[1]
 
 def p_listexpr(t):
     '''listexpr : listexpr COMA logica

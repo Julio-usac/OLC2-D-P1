@@ -100,4 +100,40 @@ fn main() {
     println!(" valor raiz1: {}",(raiz1 as f64).sqrt());
     println!(" valor raiz2: {}",raiz2.sqrt());
     
+    cont=0;
+    loop {
+        println!("Itera por siempre!");
+        if cont==2{
+            
+            println!("Itera {}",cont);
+            break;
+        }
+        cont=cont+1;
+    }
+    
+    vari= loop {
+        cont = cont + 1;
+        if cont == 10 {
+        break cont * 2;
+        }
+    };
+
+    println!("El resultado es {}", vari);
+
+    let n = 10;
+    let operacion =
+    if n < 10 {
+    10 * n // Esta expresión devuelve un 'i64'
+    } else if n == 10 {
+    3 * n // Esta expresión devuelve un 'i64'
+    } else {
+    n / 2 // Esta expresión debe devolver un 'i64' también
+    }; // <- ¡No olvides poner un punto y coma aquí!
+
+    println!("{}", operacion);
+
+    let arr= [[7,8,9],4,5,6];
+    if arr.contains(&5) {
+        println!("{}", arr.contains(&[7,8,9]) );
+    }
 }

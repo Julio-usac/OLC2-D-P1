@@ -39,3 +39,9 @@ class Funcioncadena(Nodo):
             self.tipo=DataType.int64
             
             self.valor= len(self.hojas[0].valor)
+
+        elif self.hojas[1].nombre=="contains":
+            self.hojas[0].ejecutar(entorno)
+            self.hojas[2].ejecutar(entorno)
+            self.tipo=DataType.boolean
+            self.valor=  self.hojas[2].valor in self.hojas[0].valor

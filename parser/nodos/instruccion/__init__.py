@@ -8,4 +8,5 @@ from .InstruccionPrint import InstruccionPrint
 from .InstruccionTrans import InstruccionTrans
 from .InstruccionLoop import InstruccionLoop
 from .InstruccionFor import InstruccionFor
+from .InstruccionAsignacion2 import InstruccionAsignacion2
 
