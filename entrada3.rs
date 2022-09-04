@@ -1,8 +1,8 @@
 fn main () {
  
-  shoto= [1,2,3];
+  shoto= [[4,5,6],2,3];
 
-  println!("lauren {:?} sdf {}",shoto,2*3);
+  println!("lauren {:?} sdf {}",shoto[0],2*3);
 
 
 

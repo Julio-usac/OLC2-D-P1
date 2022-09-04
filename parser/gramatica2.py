@@ -632,10 +632,21 @@ def p_expresion_id(t):
     t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
 
 def p_expresion_idarreglo(t):
-    '''expresion    : ID CORIZQ expresion CORDER'''
+    '''expresion    : ID listaarreglo'''
     t[0]=TerminalArreglo2(t.slice[0], getNoNodo())
     t[0].hojas.append(TerminalIdentificador(t.slice[1], getNoNodo()))
-    t[0].hojas.append(t[3])
+    t[0].hojas.append(t[2])
+
+def p_listaarreglo(t):
+    '''listaarreglo    : listaarreglo CORIZQ expresion CORDER
+                       | CORIZQ expresion CORDER'''
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    
+    if len(t)==4:
+        t[0].hojas.insert(0,t[2])
+    else:
+        t[0].hojas=t[1].hojas
+        t[0].hojas.append(t[3])
 
 def p_expresion_arre(t):
     '''expresion    : CORIZQ listexpr CORDER'''
