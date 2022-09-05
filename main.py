@@ -15,10 +15,10 @@ entorno = Entorno("Cualquier cosa")
 raiz.ejecutar(entorno)
 
 
-print("Entorno Global", entorno.tabla_simbolos)
+#print("Entorno Global", entorno.tabla_simbolos)
 
 
-'''inicio="digraph G { \n"
+inicio="digraph G { \n"
 inicio+= "node[shape=plaintext, color=blue] \n "
 inicio+= "struct1 [label=<\n"
 inicio+= "<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n"
@@ -29,4 +29,4 @@ for i in entorno.tabla_simbolos:
 inicio+= "</TABLE>>];}"
 
 s = Source(inicio, filename="arbol", format="png")
-s.view()'''
+s.view()
