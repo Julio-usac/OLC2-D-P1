@@ -1,0 +1,33 @@
+digraph G { 
+node[shape=plaintext, color=blue] 
+ struct1 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+<TR><TD><b>ID</b></TD><TD><b>Tipo de simbolo</b></TD><TD><b>Tipo de dato</b></TD><TD><b>Ambito</b></TD><TD><b>Fila</b></TD></TR>
+<TR><TD>bo1</TD><TD>Variable</TD><TD>DataType.boolean</TD><TD>Global</TD><TD>27</TD></TR>
+<TR><TD>bol21</TD><TD>Variable</TD><TD>DataType.boolean</TD><TD>Global</TD><TD>29</TD></TR>
+<TR><TD>cad1</TD><TD>Variable</TD><TD>DataType.cadena</TD><TD>Global</TD><TD>31</TD></TR>
+<TR><TD>cad21</TD><TD>Variable</TD><TD>DataType.cadena</TD><TD>Global</TD><TD>33</TD></TR>
+<TR><TD>letra1</TD><TD>Variable</TD><TD>DataType.char</TD><TD>Global</TD><TD>39</TD></TR>
+<TR><TD>val11</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>41</TD></TR>
+<TR><TD>val21</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>43</TD></TR>
+<TR><TD>val31</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>47</TD></TR>
+<TR><TD>a</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>75</TD></TR>
+<TR><TD>b</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>77</TD></TR>
+<TR><TD>c</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>79</TD></TR>
+<TR><TD>f</TD><TD>Variable</TD><TD>DataType.boolean</TD><TD>Global</TD><TD>81</TD></TR>
+<TR><TD>j</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD><TD>83</TD></TR>
+<TR><TD>k</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD><TD>87</TD></TR>
+<TR><TD>val1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>123</TD></TR>
+<TR><TD>resp</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>125</TD></TR>
+<TR><TD>valorVerdadero</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>135</TD></TR>
+<TR><TD>x1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>157</TD></TR>
+<TR><TD>abs1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>177</TD></TR>
+<TR><TD>abs2</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD><TD>179</TD></TR>
+<TR><TD>raiz1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>181</TD></TR>
+<TR><TD>raiz2</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD><TD>187</TD></TR>
+<TR><TD>cont</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>231</TD></TR>
+<TR><TD>vari</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>241</TD></TR>
+<TR><TD>n</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>247</TD></TR>
+<TR><TD>operacion</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD><TD>265</TD></TR>
+<TR><TD>arr</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>271</TD></TR>
+</TABLE>>];}
