@@ -136,4 +136,15 @@ fn main() {
     if arr.contains(&5) {
         println!("{}", arr.contains(&[7,8,9]) );
     }
+
+
+    let numCadena = match 3 {
+        1 => "uno",
+        2 => "dos",
+        3 => "tres",
+        4 => "cuatro",
+        _ => "cinco",
+    };
+
+    println!("Resultado match {}", numCadena);
 }

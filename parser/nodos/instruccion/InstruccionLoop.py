@@ -21,6 +21,8 @@ class InstruccionLoop(Nodo):
                 break
             elif self.hojas[1].trans=="continue":
                 continue
+            elif self.hojas[1].trans=="return":
+                break
             
             #print("Entorno de while", ne.tabla_simbolos)
             

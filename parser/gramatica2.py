@@ -66,7 +66,9 @@ tokens  = [
     'LLAVEDER',
     'NOT',
     'COMA',
+    'DPT2',
     'DPT',
+    'IMAYOR',
     'MEIGUAL',
     'MAIGUAL',
     'MENOR',
@@ -79,7 +81,8 @@ tokens  = [
     'PT',
     'MOD',
     'AMP',
-    'ID'
+    'ID',
+    'AB'
  ] + list(reservadas.values())
 
 # Tokens
@@ -96,7 +99,9 @@ t_POR       = r'\*'
 t_DIVIDIDO  = r'/'
 t_PTCOMA    = r';'
 t_COMA      = r','
+t_DPT2      = r'::'
 t_DPT       = r':'
+t_IMAYOR    = r'=>'
 t_MEIGUAL   = r'<='
 t_MAIGUAL   = r'>='
 t_MENOR     = r'<'
@@ -110,6 +115,7 @@ t_MOD       = r'%'
 t_OR        = r'\|\|'
 t_PT2        = r'\.\.'
 t_PT        = r'\.'
+t_AB        = r'\|'
 
 
 def t_DECIMAL(t):
@@ -267,9 +273,9 @@ def p_instruccion(t):
                     | PRINT NOT PARIZQ listexpr PARDER PTCOMA
                     | IF logica LLAVEIZQ instrucciones LLAVEDER unelse
                     | LOOP LLAVEIZQ instrucciones LLAVEDER
-                    | RETURN logica PTCOMA
                     | WHILE logica LLAVEIZQ instrucciones LLAVEDER
-                    | FOR ID IN opcionfor LLAVEIZQ instrucciones LLAVEDER'''
+                    | FOR ID IN opcionfor LLAVEIZQ instrucciones LLAVEDER
+                    | MATCH logica LLAVEIZQ insmatch LLAVEDER'''
     
     if t[1] == "let":
         t.slice[0].type="Asignacion";
@@ -329,12 +335,19 @@ def p_instruccion(t):
         t[0].hojas.append(TerminalGenerico(t.slice[3], getNoNodo()))
         t[0].hojas.append(t[4])
         t[0].hojas.append(t[2])
+    
+    elif t[1] == "match":
+        t.slice[0].type="MATCH";
+        t[0] = InstruccionMatch2(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[2])
+        t[0].hojas.append(t[4])
 
 
 def p_instruccion_trans(t):
     '''instruccion  : BREAK PTCOMA
                     | CONTINUE PTCOMA
-                    | BREAK logica PTCOMA'''
+                    | BREAK logica PTCOMA
+                    | RETURN logica PTCOMA'''
     if t[1] == "break" and len(t)==3:
         t.slice[0].type="break";
         t[0] = InstruccionTrans(t.slice[0], getNoNodo())
@@ -345,6 +358,11 @@ def p_instruccion_trans(t):
 
     elif t[1] == "break" and len(t)==4:
         t.slice[0].type="break";
+        t[0] = InstruccionTrans(t.slice[0], getNoNodo())
+        t[0].hojas.append(t[2])
+    
+    elif t[1] == "return":
+        t.slice[0].type="return";
         t[0] = InstruccionTrans(t.slice[0], getNoNodo())
         t[0].hojas.append(t[2])
 
@@ -377,6 +395,73 @@ def p_funcion_loop(t):
     t[0].hojas.append(TerminalGenerico(t.slice[2], getNoNodo()))
     t[0].hojas.append(t[3])
     t[0].hojas.append(TerminalGenerico(t.slice[4], getNoNodo()))
+
+
+
+def p_funcion_match2(t):
+    '''insmatch : insmatch otro2
+                | otro2 '''
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    
+    if len(t)==2:
+        t[0].hojas.append(t[1])
+    else:
+        t[0].hojas=t[1].hojas
+        t[0].hojas.append(t[2])
+
+
+def p_otro2(t):
+    '''otro2 : lmatch IMAYOR opcion COMA'''
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    
+    t[0].hojas.append(t[1])
+    t[0].hojas.append(t[3])
+
+def p_opcion(t):
+    '''opcion : LLAVEIZQ instrucciones LLAVEDER
+              | instrucciones'''
+    
+    if len(t) == 2:
+        t[0]=t[1]
+    else:
+        t[0]=t[2]
+
+def p_lmatch(t):
+    '''lmatch : lmatch AB logica 
+              | logica'''
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    if len(t)==2:
+        t[0].hojas.append(t[1])
+    else:
+        t[0].hojas=t[1].hojas
+        t[0].hojas.append(t[3])
+
+def p_funcion_match(t):
+    '''instrmatch : MATCH logica LLAVEIZQ opmatch LLAVEDER'''
+    t.slice[0].type="MATCH";
+    t[0] = InstruccionMatch(t.slice[0], getNoNodo())
+    t[0].hojas.append(t[2])
+    t[0].hojas.append(t[4])
+
+
+def p_opmatch(t):
+    '''opmatch : opmatch otro
+               | otro'''
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    
+    if len(t)==2:
+        t[0].hojas.append(t[1])
+    else:
+        t[0].hojas=t[1].hojas
+        t[0].hojas.append(t[2])
+
+def p_otro(t):
+    '''otro : logica IMAYOR logica COMA'''
+    t[0]=Terminalexp(t.slice[0], getNoNodo())
+    
+    t[0].hojas.append(t[1])
+    t[0].hojas.append(t[3])
+    
 
 def p_funcion_if(t):
     '''instrif : IF logica LLAVEIZQ instruccionesexp LLAVEDER instrelse'''
@@ -668,23 +753,31 @@ def p_expresion_char(t):
 
 
 def p_expresion_mod(t):
-    '''expresion    : expresion DPT DPT expresion'''
+    '''expresion    : expresion DPT2 expresion'''
 
 def p_expresion_amp(t):
     '''expresion    : AMP expresion'''
     t[0]=t[2]
 
 def p_expresion_pow(t):
-    '''expresion    : tipos DPT DPT POW PARIZQ ENTERO COMA ENTERO PARDER
-                    | tipos DPT DPT POWF PARIZQ DECIMAL COMA DECIMAL PARDER'''
-    t.slice[0].type=t[4]
+    '''expresion    : tipos DPT2 POW PARIZQ logica COMA logica PARDER
+                    | tipos DPT2 POWF PARIZQ logica COMA logica PARDER'''
+    t.slice[0].type=t[3]
     t[0] = NodoPow(t.slice[0], getNoNodo())
-    t[0].hojas.append(TerminalDecimal(t.slice[6], getNoNodo()))
-    t[0].hojas.append(TerminalDecimal(t.slice[8], getNoNodo()))
+    #t[0].hojas.append(TerminalDecimal(t.slice[5], getNoNodo()))
+    #t[0].hojas.append(TerminalDecimal(t.slice[7], getNoNodo()))
+    t[0].hojas.append(t[5])
+    t[0].hojas.append(t[7])
 
 def p_expresion_loop(t):
     '''expresion    : instrloop'''
     t.slice[0].type="exloop"
+    t[0] = NodoExpresion(t.slice[0], getNoNodo())
+    t[0].hojas.append(t[1])
+
+def p_expresion_match(t):
+    '''expresion    : instrmatch'''
+    t.slice[0].type="exmatch"
     t[0] = NodoExpresion(t.slice[0], getNoNodo())
     t[0].hojas.append(t[1])
 

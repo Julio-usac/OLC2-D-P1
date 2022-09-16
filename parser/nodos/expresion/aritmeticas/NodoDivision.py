@@ -12,6 +12,6 @@ class NodoDivision(Nodo):
         self.validar_tipo('/', self.hojas[0].tipo, self.hojas[2].tipo)
         if self.tipo==DataType.f64:
 
-            self.valor = round(self.hojas[0].valor / self.hojas[2].valor,1)
+            self.valor = round(self.hojas[0].valor / self.hojas[2].valor,3)
         elif self.tipo==DataType.int64:
             self.valor = int(self.hojas[0].valor / self.hojas[2].valor)

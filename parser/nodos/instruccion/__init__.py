@@ -9,4 +9,6 @@ from .InstruccionTrans import InstruccionTrans
 from .InstruccionLoop import InstruccionLoop
 from .InstruccionFor import InstruccionFor
 from .InstruccionAsignacion2 import InstruccionAsignacion2
+from .InstruccionMatch import InstruccionMatch
+from .InstruccionMatch2 import InstruccionMatch2
 

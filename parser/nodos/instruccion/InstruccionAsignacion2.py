@@ -8,11 +8,10 @@ class InstruccionAsignacion2(Nodo):
     def ejecutar(self, entorno):
         # a = expresion
         self.hojas[2].ejecutar(entorno)
-
-        
-
-     
-        valor=entorno.tabla_simbolos[self.hojas[0].nombre]["valor"]
+        self.hojas[0].ejecutar(entorno)
+        #print(entorno.tabla_simbolos)
+        #valor=entorno.tabla_simbolos[self.hojas[0].nombre]["valor"]
+        valor= self.hojas[0].valor
         cont=len(self.hojas[3].hojas)
         for i in  self.hojas[3].hojas:
 

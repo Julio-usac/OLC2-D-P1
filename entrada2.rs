@@ -6,7 +6,7 @@ fn main () {
       5*5 
    }; 
 
-   let mut t : String = "shit" + "lala".to_string();
+   let mut t : String = "shi" + "lala".to_string();
 
 
    let mut s : f64 = 7.0.sqrt() ;
@@ -34,7 +34,7 @@ fn main () {
       
       
    }
-   println!("boras {} fancy {} lol {}", a, 3%5, "r");
+   println!("boras {} fancy {} pol {}", a, 3%5, "r");
 
 }
 

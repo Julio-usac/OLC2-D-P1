@@ -1,4 +1,5 @@
 from parser.nodos.Nodo import Nodo
+import Pimp
 
 class InstruccionPrint(Nodo):
     def __init__(self, token, id_nodo):
@@ -28,8 +29,9 @@ class InstruccionPrint(Nodo):
                 
                 hoja.nombre=hoja.nombre.replace(":?","")
                 pvar+=hoja.nombre
-                
-        print(pvar)
+        
+        Pimp.imprimir+=pvar + "\n"
+        #print(pvar)
         '''self.hojas[1].ejecutar(entorno)
         print(self.hojas[1].valor)'''
         

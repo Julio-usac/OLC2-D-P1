@@ -28,3 +28,5 @@ class TerminalArreglo2(Nodo):
             self.tipo=DataType.int64
         elif type(valor)== str:
             self.tipo=DataType.cadena
+        elif type(valor)== float:
+            self.tipo=DataType.f64
