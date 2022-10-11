@@ -2,33 +2,10 @@ digraph G {
 node[shape=plaintext, color=blue] 
  struct1 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
-<TR><TD><b>ID</b></TD><TD><b>Tipo de simbolo</b></TD><TD><b>Tipo de dato</b></TD><TD><b>Ambito</b></TD></TR>
-<TR><TD>bo1</TD><TD>Variable</TD><TD>DataType.boolean</TD><TD>Global</TD></TR>
-<TR><TD>bol21</TD><TD>Variable</TD><TD>DataType.boolean</TD><TD>Global</TD></TR>
-<TR><TD>cad1</TD><TD>Variable</TD><TD>DataType.cadena</TD><TD>Global</TD></TR>
-<TR><TD>cad21</TD><TD>Variable</TD><TD>DataType.cadena</TD><TD>Global</TD></TR>
-<TR><TD>letra1</TD><TD>Variable</TD><TD>DataType.char</TD><TD>Global</TD></TR>
-<TR><TD>val11</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>val21</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>val31</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>a</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>b</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>c</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>f</TD><TD>Variable</TD><TD>DataType.boolean</TD><TD>Global</TD></TR>
-<TR><TD>j</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD></TR>
-<TR><TD>k</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD></TR>
-<TR><TD>val1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>resp</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>valorVerdadero</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>x1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>abs1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>abs2</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD></TR>
-<TR><TD>raiz1</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>raiz2</TD><TD>Variable</TD><TD>DataType.f64</TD><TD>Global</TD></TR>
-<TR><TD>cont</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>vari</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>n</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>operacion</TD><TD>Variable</TD><TD>DataType.int64</TD><TD>Global</TD></TR>
-<TR><TD>arr</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD></TR>
-<TR><TD>numCadena</TD><TD>Variable</TD><TD>DataType.direccion</TD><TD>Global</TD></TR>
+<TR><TD><b>ID</b></TD><TD><b>Tipo de simbolo</b></TD><TD><b>Tipo de dato</b></TD><TD><b>Ambito</b></TD><TD><b>Fila</b></TD></TR>
+<TR><TD>estudiantes</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>5</TD></TR>
+<TR><TD>cursos</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>7</TD></TR>
+<TR><TD>notas_buenas</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>13</TD></TR>
+<TR><TD>notas</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>20</TD></TR>
+<TR><TD>ponderacion</TD><TD>Arreglo</TD><TD>DataType.arreglo</TD><TD>Global</TD><TD>22</TD></TR>
 </TABLE>>];}
