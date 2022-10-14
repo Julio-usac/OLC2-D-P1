@@ -52,3 +52,10 @@ class Nodo(ABC):
     @abstractmethod
     def ejecutar(self, entorno):
         pass
+    @abstractmethod
+    def crear_tabla_simbolos(self, tabla_simbolos):
+        pass
+
+    @abstractmethod
+    def crear_codigo3d(self, tabla_simbolos):
+        pass
