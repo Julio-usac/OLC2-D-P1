@@ -31,3 +31,23 @@ class InstruccionMatch(Nodo):
 
         return
 
+    def crear_codigo3d(self, tabla_simbolos):
+        
+        self.hojas[2].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionStack']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
+        texto += str(self.referencia) + " = P + " + str(posicionStack) + "\n"
+        texto += "stack[(int)" + str(self.referencia) + "]" + " = " + str(self.hojas[2].referencia) + "\n"
+        self.hojas[2].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionStack']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
+        texto += str(self.referencia) + " = P + " + str(posicionStack) + "\n"
+        texto += "stack[(int)" + str(self.referencia) + "]" + " = " + str(self.hojas[2].referencia) + "\n"
+        self.hojas[2].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionStack']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
+        texto += str(self.referencia) + " = P + " + str(posicionStack) + "\n"
+        texto += "stack[(int)" + str(self.referencia) + "]" + " = " + str(self.hojas[2].referencia) + "\n"
