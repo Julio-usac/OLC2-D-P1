@@ -31,7 +31,7 @@ class InstruccionIf(Nodo):
         print('El tipo de dato debe ser booleano')
 
     def crear_codigo3d(self, tabla_simbolos):
-        # a = expresion
+
         self.hojas[2].crear_codigo3d(tabla_simbolos)
         posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionStack']
         texto = self.hojas[2].expresion + "\n"
