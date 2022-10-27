@@ -27,3 +27,27 @@ class NodoListaExpresion(Nodo):
                 'tam': len(arreglo)
             }
             self.tipo = DataType.vector
+    def crear_codigo3d(self, tabla_simbolos):
+        
+        self.hojas[4].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionHeap']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
+        texto += str(self.referencia) + " = H + " + str(posicionStack) + "\n"
+        texto += "Heap[(int)" + str(self.referencia) + "]" + " = " + str(self.hojas[2].referencia) + "\n"
+        self.hojas[3].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionStack']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
+        texto += str(self.referencia) + " = P + " + str(posicionStack) + "\n"
+        texto += "stack[(int)" + str(self.referencia) + "]" + " = " + str(self.hojas[2].referencia) + "\n"
+        self.hojas[5].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionStack']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
+        texto += str(self.referencia) + " = P + " + str(posicionStack) + "\n"
+        texto += "stack[(int)" + str(self.referencia) + "]" + " = " + str(self.hojas[2].referencia) + "\n"
+        self.hojas[4].crear_codigo3d(tabla_simbolos)
+        posicionStack = tabla_simbolos.buscar_posicion(self.hojas[0].nombre)['posicionHeap']
+        texto = self.hojas[2].expresion + "\n"
+        self.referencia = self.obtener_temporal()
